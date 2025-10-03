@@ -70,7 +70,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/friends", friendRoutes);
 app.use("/api/transactions", transactionRoutes);
-app.use("/api/email", emailRoutes);
+// app.use("/api/email", emailRoutes);
 
 // 404 handler
 app.use((req, res, next) => {
