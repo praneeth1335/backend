@@ -2,11 +2,11 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
   try {
-    // Create transporter with explicit host, port, and secure settings
+    // Create transporter with Gmail SMTP configuration
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465, // SSL
-      secure: true, // true for port 465
+      port: 465, // SSL port
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER, // your Gmail address
         pass: process.env.EMAIL_PASS, // Gmail App Password
@@ -14,7 +14,7 @@ const sendEmail = async (options) => {
       connectionTimeout: 20000, // 20 seconds timeout
     });
 
-    // Verify SMTP connection
+    // Verify connection
     await transporter.verify();
     console.log("SMTP connection verified");
 
