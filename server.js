@@ -16,6 +16,9 @@ const connectDB = require("./config/db");
 
 const app = express();
 
+// ⚡ FIX FOR RENDER — Trust Proxy
+app.set("trust proxy", 1); // Trust first proxy (needed for Render)
+
 // Connect to MongoDB
 connectDB();
 
@@ -106,7 +109,6 @@ app.listen(PORT, "0.0.0.0", () => {
 // Handle unhandled promise rejections
 process.on("unhandledRejection", (err, promise) => {
   console.log("Unhandled Promise Rejection:", err.message);
-  // Close server & exit process
   process.exit(1);
 });
 
