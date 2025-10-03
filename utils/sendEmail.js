@@ -2,14 +2,21 @@ const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
   try {
-    // Create transporter
+    // Create transporter with explicit host, port, and secure settings
     const transporter = nodemailer.createTransport({
-      service: process.env.EMAIL_SERVICE || "gmail",
+      host: "smtp.gmail.com",
+      port: 465, // SSL
+      secure: true, // true for port 465
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.EMAIL_USER, // your Gmail address
+        pass: process.env.EMAIL_PASS, // Gmail App Password
       },
+      connectionTimeout: 20000, // 20 seconds timeout
     });
+
+    // Verify SMTP connection
+    await transporter.verify();
+    console.log("SMTP connection verified");
 
     // Email options
     const mailOptions = {
@@ -23,6 +30,7 @@ const sendEmail = async (options) => {
     // Send email
     const info = await transporter.sendMail(mailOptions);
     console.log("Email sent successfully:", info.messageId);
+
     return true;
   } catch (error) {
     console.error("Email sending error:", error);
